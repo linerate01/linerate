@@ -117,11 +117,11 @@ export default class Home extends Component {
   registerElection = async (data) => {
     await this.state.ElectionInstance.methods
       .setElectionDetails(
-        data.adminFName.toLowerCase() + " " + data.adminLName.toLowerCase(),
-        data.adminEmail.toLowerCase(),
-        data.adminTitle.toLowerCase(),
-        data.electionTitle.toLowerCase(),
-        data.organizationTitle.toLowerCase()
+        escape(data.adminFName.toLowerCase()) + " " + escape(data.adminLName.toLowerCase()),
+        escape(data.adminEmail.toLowerCase()),
+        escape(data.adminTitle.toLowerCase()),
+        escape(data.electionTitle.toLowerCase()),
+        escape(data.organizationTitle.toLowerCase())
       )
       .send({ from: this.state.account, gas: 1000000 });
     window.location.reload();
@@ -132,7 +132,7 @@ export default class Home extends Component {
       return (
         <>
           <Navbar />
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -140,17 +140,17 @@ export default class Home extends Component {
       <>
         {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
         <div className="container-main">
-          <div className="container-item center-items info">
-            Your Account: {this.state.account}
+          <div className="container-item center-items">
+            블록체인ID: {this.state.account}
           </div>
           {!this.state.elStarted & !this.state.elEnded ? (
-            <div className="container-item info">
+            <div className="container-item">
               <center>
-                <h3>The election has not been initialize.</h3>
+                <h3>아직 시작된 투표가 존재하지 않습니다.</h3>
                 {this.state.isAdmin ? (
-                  <p>Set up the election.</p>
+                  <p>투표를 시작해주세요.</p>
                 ) : (
-                  <p>Please wait..</p>
+                  <p>잠시만 기다려주세요...</p>
                 )}
               </center>
             </div>
@@ -168,13 +168,13 @@ export default class Home extends Component {
           <>
             <div className="container-item attention">
               <center>
-                <h3>The Election ended.</h3>
+                <h3>투표가 종료되었습니다.</h3>
                 <br />
                 <Link
                   to="/Results"
                   style={{ color: "black", textDecoration: "underline" }}
                 >
-                  See results
+                  결과 확인
                 </Link>
               </center>
             </div>
@@ -208,16 +208,16 @@ export default class Home extends Component {
               <div className="container-main">
                 {/* about-admin */}
                 <div className="about-admin">
-                  <h3>About Admin</h3>
+                  <h3>관리자 정보</h3>
                   <div className="container-item center-items">
                     <div>
                       <label className="label-home">
-                        Full Name{" "}
+                        이름{" "}
                         {errors.adminFName && <EMsg msg="*required" />}
                         <input
                           className="input-home"
                           type="text"
-                          placeholder="First Name"
+                          placeholder="성"
                           {...register("adminFName", {
                             required: true,
                           })}
@@ -225,19 +225,19 @@ export default class Home extends Component {
                         <input
                           className="input-home"
                           type="text"
-                          placeholder="Last Name"
+                          placeholder="이름"
                           {...register("adminLName")}
                         />
                       </label>
 
                       <label className="label-home">
-                        Email{" "}
+                        이메일{" "}
                         {errors.adminEmail && (
                           <EMsg msg={errors.adminEmail.message} />
                         )}
                         <input
                           className="input-home"
-                          placeholder="eg. you@example.com"
+                          placeholder="예) you@example.com"
                           name="adminEmail"
                           {...register("adminEmail", {
                             required: "*Required",
@@ -250,12 +250,12 @@ export default class Home extends Component {
                       </label>
 
                       <label className="label-home">
-                        Job Title or Position{" "}
+                        직책 또는 직업{" "}
                         {errors.adminTitle && <EMsg msg="*required" />}
                         <input
                           className="input-home"
                           type="text"
-                          placeholder="eg. HR Head "
+                          placeholder="예) 팀장"
                           {...register("adminTitle", {
                             required: true,
                           })}
@@ -266,28 +266,28 @@ export default class Home extends Component {
                 </div>
                 {/* about-election */}
                 <div className="about-election">
-                  <h3>About Election</h3>
+                  <h3>투표 정보</h3>
                   <div className="container-item center-items">
                     <div>
                       <label className="label-home">
-                        Election Title{" "}
+                        투표 이름{" "}
                         {errors.electionTitle && <EMsg msg="*required" />}
                         <input
                           className="input-home"
                           type="text"
-                          placeholder="eg. School Election"
+                          placeholder="예) 대통령 선거"
                           {...register("electionTitle", {
                             required: true,
                           })}
                         />
                       </label>
                       <label className="label-home">
-                        Organization Name{" "}
+                        기관 이름{" "}
                         {errors.organizationName && <EMsg msg="*required" />}
                         <input
                           className="input-home"
                           type="text"
-                          placeholder="eg. Lifeline Academy"
+                          placeholder="예) 청와대"
                           {...register("organizationTitle", {
                             required: true,
                           })}

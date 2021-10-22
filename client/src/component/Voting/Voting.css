@@ -8,6 +8,7 @@ small {
   color: grey;
   font-size: medium;
 }
+
 p {
   margin: 1px;
   padding: 3px;
@@ -16,7 +17,7 @@ p {
   color: grey;
 }
 .slogan {
-  color: #ccab00;
+  color: #727272;
   font-size: 1.5em;
   margin: 7px 0px;
 }
@@ -35,7 +36,7 @@ p {
   float: left;
   margin-left: 1%;
   padding: 17px;
-  background-color: #e5e5e5;
+  background-color: #F2F2F2;
   border-radius: 11px;
 }
 .vote-btn-container {

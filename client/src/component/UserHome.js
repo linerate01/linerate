@@ -5,14 +5,14 @@ function UserHome(props) {
     <div>
       <div className="container-main">
         <div className="container-list title">
-          <h1>{props.el.electionTitle}</h1>
+          <h1>{unescape(props.el.electionTitle)}</h1>
           <br />
-          <center>{props.el.organizationTitle}</center>
+          <center>{unescape(props.el.organizationTitle)}</center>
           <table style={{ marginTop: "21px" }}>
             <tr>
               <th>admin</th>
               <td>
-                {props.el.adminName} ({props.el.adminTitle})
+                {unescape(props.el.adminName)} ({unescape(props.el.adminTitle)})
               </td>
             </tr>
             <tr>

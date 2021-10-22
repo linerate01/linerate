@@ -99,7 +99,7 @@ export default class Result extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -114,15 +114,14 @@ export default class Result extends Component {
           ) : this.state.isElStarted && !this.state.isElEnded ? (
             <div className="container-item attention">
               <center>
-                <h3>The election is being conducted at the movement.</h3>
-                <p>Result will be displayed once the election has ended.</p>
-                <p>Go ahead and cast your vote {"(if not already)"}.</p>
+                <h3>투표가 아직 시행 중입니다!</h3>
+                <p>결과는 투표가 완전히 끝난 후 공개될 예정입니다.</p>
                 <br />
                 <Link
                   to="/Voting"
                   style={{ color: "black", textDecoration: "underline" }}
                 >
-                  Voting Page
+                  투표 화면
                 </Link>
               </center>
             </div>
@@ -152,14 +151,14 @@ function displayWinner(candidates) {
   };
   const renderWinner = (winner) => {
     return (
-      <div className="container-winner">
+      <div className="container-item alert">
         <div className="winner-info">
-          <p className="winner-tag">Winner!</p>
-          <h2> {winner.header}</h2>
-          <p className="winner-slogan">{winner.slogan}</p>
+          <p className="winner-tag">당선자</p>
+          <h2> {unescape(winner.header)}</h2>
+          <p className="winner-slogan">{unescape(winner.slogan)}</p>
         </div>
         <div className="winner-votes">
-          <div className="votes-tag">Total Votes: </div>
+          <div className="votes-tag">총 투표 수: </div>
           <div className="vote-count">{winner.voteCount}</div>
         </div>
       </div>
@@ -174,7 +173,7 @@ export function displayResults(candidates) {
     return (
       <tr>
         <td>{candidate.id}</td>
-        <td>{candidate.header}</td>
+        <td>{unescape(candidate.header)}</td>
         <td>{candidate.voteCount}</td>
       </tr>
     );
@@ -185,20 +184,20 @@ export function displayResults(candidates) {
         <div className="container-main">{displayWinner(candidates)}</div>
       ) : null}
       <div className="container-main" style={{ borderTop: "1px solid" }}>
-        <h2>Results</h2>
-        <small>Total candidates: {candidates.length}</small>
+        <h2>결과</h2>
+        <small>총 후보자 수: {candidates.length}</small>
         {candidates.length < 1 ? (
           <div className="container-item attention">
-            <center>No candidates.</center>
+            <center>후보자 없음.</center>
           </div>
         ) : (
           <>
-            <div className="container-item">
+            <div className="container-list">
               <table>
                 <tr>
-                  <th>Id</th>
-                  <th>Candidate</th>
-                  <th>Votes</th>
+                  <th>ID</th>
+                  <th>후보자</th>
+                  <th>투표</th>
                 </tr>
                 {candidates.map(renderResults)}
               </table>
@@ -207,7 +206,7 @@ export function displayResults(candidates) {
               className="container-item"
               style={{ border: "1px solid black" }}
             >
-              <center>That is all.</center>
+              <center>여기가 마지막 입니다.</center>
             </div>
           </>
         )}

@@ -57,7 +57,7 @@ export default class Registration extends Component {
       const instance = new web3.eth.Contract(
         Election.abi,
         deployedNetwork && deployedNetwork.address
-      );
+      ); 
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
@@ -134,7 +134,7 @@ export default class Registration extends Component {
   };
   registerAsVoter = async () => {
     await this.state.ElectionInstance.methods
-      .registerAsVoter(this.state.voterName, this.state.voterPhone)
+      .registerAsVoter(escape(this.state.voterName), this.state.voterPhone)
       .send({ from: this.state.account, gas: 1000000 });
     window.location.reload();
   };
@@ -143,7 +143,7 @@ export default class Registration extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -154,17 +154,17 @@ export default class Registration extends Component {
           <NotInit />
         ) : (
           <>
-            <div className="container-item info">
-              <p>Total registered voters: {this.state.voters.length}</p>
+            <div className="container-item">
+              <p>총 가입한 투표자 수: {this.state.voters.length}</p>
             </div>
             <div className="container-main">
-              <h3>Registration</h3>
-              <small>Register to vote.</small>
+              <h3>가입하기</h3>
+              <small>[블록체인 기반 투표 시스템]</small>
               <div className="container-item">
                 <form>
                   <div className="div-li">
                     <label className={"label-r"}>
-                      Account Address
+                      블록체인ID
                       <input
                         className={"input-r"}
                         type="text"
@@ -175,11 +175,11 @@ export default class Registration extends Component {
                   </div>
                   <div className="div-li">
                     <label className={"label-r"}>
-                      Name
+                      이름
                       <input
                         className={"input-r"}
                         type="text"
-                        placeholder="eg. Ava"
+                        placeholder="예) 홍길동"
                         value={this.state.voterName}
                         onChange={this.updateVoterName}
                       />{" "}
@@ -187,11 +187,11 @@ export default class Registration extends Component {
                   </div>
                   <div className="div-li">
                     <label className={"label-r"}>
-                      Phone number <span style={{ color: "tomato" }}>*</span>
+                      전화번호 <span style={{ color: "tomato" }}>*</span>
                       <input
                         className={"input-r"}
                         type="number"
-                        placeholder="eg. 9841234567"
+                        placeholder="예) 01012345678"
                         value={this.state.voterPhone}
                         onChange={this.updateVoterPhone}
                       />
@@ -199,22 +199,22 @@ export default class Registration extends Component {
                   </div>
                   <p className="note">
                     <span style={{ color: "tomato" }}> Note: </span>
-                    <br /> Make sure your account address and Phone number are
-                    correct. <br /> Admin might not approve your account if the
-                    provided Phone number nub does not matches the account
-                    address registered in admins catalogue.
+                    <br />계정 주소와 전화 번호가 다음과 같은지 확인하십시오.
+                    <br />다음과 같은 경우 관리자가 계정을 승인하지 않을 수 있습니다.<br /> 
+                    1. 전화 번호가 계정과 일치하지 않을 경우.　 
+                    2. 이미 카탈로그에 등록된 주소일 경우.
                   </p>
                   <button
                     className="btn-add"
                     disabled={
-                      this.state.voterPhone.length !== 10 ||
+                      this.state.voterPhone.length !== 11 ||
                       this.state.currentVoter.isVerified
                     }
                     onClick={this.registerAsVoter}
                   >
                     {this.state.currentVoter.isRegistered
-                      ? "Update"
-                      : "Register"}
+                      ? "갱신하기"
+                      : "가입하기"}
                   </button>
                 </form>
               </div>
@@ -237,7 +237,7 @@ export default class Registration extends Component {
                 className="container-main"
                 style={{ borderTop: "1px solid" }}
               >
-                <small>TotalVoters: {this.state.voters.length}</small>
+                <small>총 투표자 수: {this.state.voters.length}</small>
                 {loadAllVoters(this.state.voters)}
               </div>
             ) : null}
@@ -251,36 +251,36 @@ export function loadCurrentVoter(voter, isRegistered) {
   return (
     <>
       <div
-        className={"container-item " + (isRegistered ? "success" : "attention")}
+        className={"container-item "}
       >
-        <center>Your Registered Info</center>
+        <center>가입 정보</center>
       </div>
       <div
-        className={"container-list " + (isRegistered ? "success" : "attention")}
+        className={"container-list "}
       >
         <table>
           <tr>
-            <th>Account Address</th>
+            <th>블록체인ID</th>
             <td>{voter.address}</td>
           </tr>
           <tr>
-            <th>Name</th>
-            <td>{voter.name}</td>
+            <th>이름</th>
+            <td>{unescape(voter.name)}</td>
           </tr>
           <tr>
-            <th>Phone</th>
+            <th>전화번호</th>
             <td>{voter.phone}</td>
           </tr>
           <tr>
-            <th>Voted</th>
+            <th>투표여부</th>
             <td>{voter.hasVoted ? "True" : "False"}</td>
           </tr>
           <tr>
-            <th>Verification</th>
+            <th>승인여부</th>
             <td>{voter.isVerified ? "True" : "False"}</td>
           </tr>
           <tr>
-            <th>Registered</th>
+            <th>가입여부</th>
             <td>{voter.isRegistered ? "True" : "False"}</td>
           </tr>
         </table>
@@ -292,30 +292,30 @@ export function loadAllVoters(voters) {
   const renderAllVoters = (voter) => {
     return (
       <>
-        <div className="container-list success">
+        <div className="container-list">
           <table>
             <tr>
-              <th>Account address</th>
+              <th>블록체인ID</th>
               <td>{voter.address}</td>
             </tr>
             <tr>
-              <th>Name</th>
-              <td>{voter.name}</td>
+              <th>이름</th>
+              <td>{unescape(voter.name)}</td>
             </tr>
             <tr>
-              <th>Phone</th>
+              <th>전화번호</th>
               <td>{voter.phone}</td>
             </tr>
             <tr>
-              <th>Voted</th>
+              <th>투표여부</th>
               <td>{voter.hasVoted ? "True" : "False"}</td>
             </tr>
             <tr>
-              <th>Verified</th>
+              <th>승인여부</th>
               <td>{voter.isVerified ? "True" : "False"}</td>
             </tr>
             <tr>
-              <th>Registered</th>
+              <th>가입여부</th>
               <td>{voter.isRegistered ? "True" : "False"}</td>
             </tr>
           </table>
@@ -325,8 +325,8 @@ export function loadAllVoters(voters) {
   };
   return (
     <>
-      <div className="container-item success">
-        <center>List of voters</center>
+      <div className="container-item">
+        <center>투표자 목록</center>
       </div>
       {voters.map(renderAllVoters)}
     </>

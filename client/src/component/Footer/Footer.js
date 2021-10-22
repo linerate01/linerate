@@ -8,28 +8,19 @@ const Footer = () => (
     <div className="footer">
       <div className="footer-container">
         <p>
-          View this project on{" "}
-          <a
-            className="profile"
-            href="https://github.com/arlbibek/dVoting"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          .
+          Copyright® 2021 all rights reserved{" "}
+        
         </p>
         <p>
-          Made with <i className="fas fa-heartbeat" /> by{" "}
+          제작: <i className="fas fa-heartbeat" />
           <a
             className="profile"
-            href="https://arlbibek.github.io"
+            href="https://linerate.tistory.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Bibek Aryal
+            LINERATE
           </a>
-          .
         </p>
       </div>
     </div>

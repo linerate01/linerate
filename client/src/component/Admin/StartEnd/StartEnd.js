@@ -90,7 +90,7 @@ export default class StartEnd extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -106,8 +106,8 @@ export default class StartEnd extends Component {
       <>
         <NavbarAdmin />
         {!this.state.elStarted & !this.state.elEnded ? (
-          <div className="container-item info">
-            <center>The election have never been initiated.</center>
+          <div className="container-item">
+            <center>아직 시작된 투표가 존재하지 않습니다.</center>
           </div>
         ) : null}
         <div className="container-main">
@@ -116,13 +116,13 @@ export default class StartEnd extends Component {
             <>
               <div className="container-item">
                 <button onClick={this.startElection} className="start-btn">
-                  Start {this.state.elEnded ? "Again" : null}
+                  시작 {this.state.elEnded ? "Again" : null}
                 </button>
               </div>
               {this.state.elEnded ? (
                 <div className="container-item">
                   <center>
-                    <p>The election ended.</p>
+                    <p>투표 종료됨.</p>
                   </center>
                 </div>
               ) : null}
@@ -131,19 +131,19 @@ export default class StartEnd extends Component {
             <>
               <div className="container-item">
                 <center>
-                  <p>The election started.</p>
+                  <p>투표 시작됨.</p>
                 </center>
               </div>
               <div className="container-item">
                 <button onClick={this.endElection} className="start-btn">
-                  End
+                  종료
                 </button>
               </div>
             </>
           )}
           <div className="election-status">
-            <p>Started: {this.state.elStarted ? "True" : "False"}</p>
-            <p>Ended: {this.state.elEnded ? "True" : "False"}</p>
+            <p>시작: {this.state.elStarted ? "True" : "False"}</p>
+            <p>종료: {this.state.elEnded ? "True" : "False"}</p>
           </div>
         </div>
       </>

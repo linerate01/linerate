@@ -62,7 +62,7 @@ export default class AddCandidate extends Component {
 
       const admin = await this.state.ElectionInstance.methods.getAdmin().call();
       if (this.state.account === admin) {
-        this.setState({ isAdmin: true });
+        this.setState({ isAdmin: true }); 
       }
 
       // Loading Candidates details
@@ -82,7 +82,7 @@ export default class AddCandidate extends Component {
       // Catch any errors for any of the above operations.
       console.error(error);
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
+        `블록체인ID와 Contract를 불러오는데에 실패하였습니다. 콘솔을 확인해주세요.`
       );
     }
   };
@@ -95,7 +95,7 @@ export default class AddCandidate extends Component {
 
   addCandidate = async () => {
     await this.state.ElectionInstance.methods
-      .addCandidate(this.state.header, this.state.slogan)
+      .addCandidate(escape(this.state.header), escape(this.state.slogan))
       .send({ from: this.state.account, gas: 1000000 });
     window.location.reload();
   };
@@ -105,7 +105,7 @@ export default class AddCandidate extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -113,38 +113,40 @@ export default class AddCandidate extends Component {
       return (
         <>
           <Navbar />
-          <AdminOnly page="Add Candidate Page." />
+          <AdminOnly page="후보자 추가" />
         </>
       );
     }
     return (
       <>
         <NavbarAdmin />
+        <script type="text/javascript" src="AddCandidate.js"></script>
         <div className="container-main">
-          <h2>Add a new candidate</h2>
-          <small>Total candidates: {this.state.candidateCount}</small>
+          <h2>후보자 등록하기</h2>
+          <small>총 후보자 수: {this.state.candidateCount}</small>
           <div className="container-item">
             <form className="form">
               <label className={"label-ac"}>
-                Header
+                후보자 이름
                 <input
                   className={"input-ac"}
                   type="text"
-                  placeholder="eg. Marcus"
+                  placeholder="예: 문재인"
                   value={this.state.header}
                   onChange={this.updateHeader}
                 />
               </label>
               <label className={"label-ac"}>
-                Slogan
+                구호
                 <input
                   className={"input-ac"}
                   type="text"
-                  placeholder="eg. It is what it is"
+                  placeholder="예: 사람이 먼저다."
                   value={this.state.slogan}
                   onChange={this.updateSlogan}
                 />
               </label>
+
               <button
                 className="btn-add"
                 disabled={
@@ -152,8 +154,9 @@ export default class AddCandidate extends Component {
                 }
                 onClick={this.addCandidate}
               >
-                Add
+                추가
               </button>
+
             </form>
           </div>
         </div>
@@ -166,15 +169,15 @@ export function loadAdded(candidates) {
   const renderAdded = (candidate) => {
     return (
       <>
-        <div className="container-list success">
+        <div className="container-list" >
           <div
             style={{
               maxHeight: "21px",
               overflow: "auto",
             }}
           >
-            {candidate.id}. <strong>{candidate.header}</strong>:{" "}
-            {candidate.slogan}
+            [기호{candidate.id}번{"] "} <strong> {unescape(candidate.header)} </strong>:{" "}
+            {unescape(candidate.slogan)}
           </div>
         </div>
       </>
@@ -182,21 +185,20 @@ export function loadAdded(candidates) {
   };
   return (
     <div className="container-main" style={{ borderTop: "1px solid" }}>
-      <div className="container-item info">
-        <center>Candidates List</center>
+      <div className="container-item">
+        <center>후보자 정보</center>
       </div>
       {candidates.length < 1 ? (
         <div className="container-item alert">
-          <center>No candidates added.</center>
+          <center>추가된 후보자들이 존재하지 않습니다.</center>
         </div>
       ) : (
         <div
           className="container-item"
           style={{
             display: "block",
-            backgroundColor: "#DDFFFF",
           }}
-        >
+        > 
           {candidates.map(renderAdded)}
         </div>
       )}

@@ -25,9 +25,9 @@ const StartEnd = (props) => {
                 className="container-item attention"
                 style={{ display: "block" }}
               >
-                <h2>Do not forget to add candidates.</h2>
+                <h2>후보자를 반드시 등록해주세요.</h2>
                 <p>
-                  Go to{" "}
+                  지금{" "}
                   <Link
                     title="Add a new "
                     to="/addCandidate"
@@ -36,28 +36,28 @@ const StartEnd = (props) => {
                       textDecoration: "underline",
                     }}
                   >
-                    add candidates
+                    후보자 등록
                   </Link>{" "}
-                  page.
+                  하기
                 </p>
               </div>
               <div className="container-item">
                 <button type="submit" style={btn}>
-                  Start Election {props.elEnded ? "Again" : null}
+                  투표 등록 {props.elEnded ? "Again" : null}
                 </button>
               </div>
             </>
           ) : (
             <div className="container-item">
               <center>
-                <p>Re-deploy the contract to start election again.</p>
+                <p>투표를 다시 실행하려면 Contract를 재실행해주세요.</p>
               </center>
             </div>
           )}
           {props.elEnded ? (
             <div className="container-item">
               <center>
-                <p>The election ended.</p>
+                <p>투표 종료됨.</p>
               </center>
             </div>
           ) : null}
@@ -66,7 +66,7 @@ const StartEnd = (props) => {
         <>
           <div className="container-item">
             <center>
-              <p>The election started.</p>
+              <p>투표 시작됨.</p>
             </center>
           </div>
           <div className="container-item">
@@ -76,7 +76,7 @@ const StartEnd = (props) => {
               onClick={props.endElFn}
               style={btn}
             >
-              End
+              종료
             </button>
           </div>
         </>

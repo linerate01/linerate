@@ -5,7 +5,7 @@ const ElectionStatus = (props) => {
     padding: "11px",
     margin: "7px",
     width: "100%",
-    border: "1px solid tomato",
+    border: "1px solid",
     marginLeft: "auto",
     marginRight: "auto",
     textAlign: "center",
@@ -20,10 +20,10 @@ const ElectionStatus = (props) => {
       className="container-main"
       style={{ borderTop: "1px solid", marginTop: "0px" }}
     >
-      <h3>Election Status</h3>
+      <h3>투표 정보</h3>
       <div style={electionStatus}>
-        <p>Started: {props.elStarted ? "True" : "False"}</p>
-        <p>Ended: {props.elEnded ? "True" : "False"}</p>
+        <p>시작 여부: {props.elStarted ? "True" : "False"}</p>
+        <p>종료 여부: {props.elEnded ? "True" : "False"}</p>
       </div>
       <div className="container-item" />
     </div>

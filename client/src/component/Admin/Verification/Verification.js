@@ -85,7 +85,7 @@ export default class Registration extends Component {
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
+        `블록체인ID와 Contract를 불러오는데에 실패하였습니다. 콘솔을 확인해주세요.`
       );
       console.error(error);
     }
@@ -100,16 +100,16 @@ export default class Registration extends Component {
     return (
       <>
         {voter.isVerified ? (
-          <div className="container-list success">
-            <p style={{ margin: "7px 0px" }}>AC: {voter.address}</p>
+          <div className="container-list">
+            <p style={{ margin: "7px 0px" }}>블록체인ID: {voter.address}</p>
             <table>
               <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Voted</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>투표여부</th>
               </tr>
               <tr>
-                <td>{voter.name}</td>
+                <td>{unescape(voter.name)}</td>
                 <td>{voter.phone}</td>
                 <td>{voter.hasVoted ? "True" : "False"}</td>
               </tr>
@@ -117,42 +117,42 @@ export default class Registration extends Component {
           </div>
         ) : null}
         <div
-          className="container-list attention"
+          className="container-list"
           style={{ display: voter.isVerified ? "none" : null }}
         >
           <table>
             <tr>
-              <th>Account address</th>
+              <th>블록체인ID</th>
               <td>{voter.address}</td>
             </tr>
             <tr>
-              <th>Name</th>
-              <td>{voter.name}</td>
+              <th>이름</th>
+              <td>{unescape(voter.name)}</td>
             </tr>
             <tr>
-              <th>Phone</th>
+              <th>전화번호</th>
               <td>{voter.phone}</td>
             </tr>
             <tr>
-              <th>Voted</th>
+              <th>투표여부</th>
               <td>{voter.hasVoted ? "True" : "False"}</td>
             </tr>
             <tr>
-              <th>Verified</th>
+              <th>승인여부</th>
               <td>{voter.isVerified ? "True" : "False"}</td>
             </tr>
             <tr>
-              <th>Registered</th>
+              <th>가입여부</th>
               <td>{voter.isRegistered ? "True" : "False"}</td>
             </tr>
           </table>
           <div style={{}}>
             <button
-              className="btn-verification approve"
+              className="btn-verification"
               disabled={voter.isVerified}
               onClick={() => verifyVoter(true, voter.address)}
             >
-              Approve
+              승인하기
             </button>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default class Registration extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -172,7 +172,7 @@ export default class Registration extends Component {
       return (
         <>
           <Navbar />
-          <AdminOnly page="Verification Page." />
+          <AdminOnly page="승인 (접근거부)" />
         </>
       );
     }
@@ -180,14 +180,14 @@ export default class Registration extends Component {
       <>
         <NavbarAdmin />
         <div className="container-main">
-          <h3>Verification</h3>
-          <small>Total Voters: {this.state.voters.length}</small>
+          <h3>승인된 목록</h3>
+          <small>총 투표자 수: {this.state.voters.length}</small>
           {this.state.voters.length < 1 ? (
-            <div className="container-item info">None has registered yet.</div>
+            <div className="container-item">아직 가입한 사람이 없습니다.</div>
           ) : (
             <>
-              <div className="container-item info">
-                <center>List of registered voters</center>
+              <div className="container-item">
+                <center>가입된 투표자 목록</center>
               </div>
               {this.state.voters.map(this.renderUnverifiedVoters)}
             </>

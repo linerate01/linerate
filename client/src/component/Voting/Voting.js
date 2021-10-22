@@ -113,7 +113,7 @@ export default class Voting extends Component {
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
+        `블록체인ID와 Contract를 불러오는데에 실패하였습니다. 콘솔을 확인해주세요.`
       );
       console.error(error);
     }
@@ -128,7 +128,7 @@ export default class Voting extends Component {
     };
     const confirmVote = (id, header) => {
       var r = window.confirm(
-        "Vote for " + header + " with Id " + id + ".\nAre you sure?"
+        "기호 " + id + "번 " + unescape(header) + "에게 투표합니다."+"\n정말 투표하시겠습니까?"
       );
       if (r === true) {
         castVote(id);
@@ -136,12 +136,14 @@ export default class Voting extends Component {
     };
     return (
       <div className="container-item">
+
         <div className="candidate-info">
           <h2>
-            {candidate.header} <small>#{candidate.id}</small>
+           {unescape(candidate.header)}<small> 기호{candidate.id}번</small>
           </h2>
-          <p className="slogan">{candidate.slogan}</p>
+          <p className="slogan">{unescape(candidate.slogan)}</p>
         </div>
+
         <div className="vote-btn-container">
           <button
             onClick={() => confirmVote(candidate.id, candidate.header)}
@@ -152,9 +154,10 @@ export default class Voting extends Component {
               this.state.currentVoter.hasVoted
             }
           >
-            Vote
+            투표하기
           </button>
         </div>
+
       </div>
     );
   };
@@ -164,7 +167,7 @@ export default class Voting extends Component {
       return (
         <>
           {this.state.isAdmin ? <NavbarAdmin /> : <Navbar />}
-          <center>Loading Web3, accounts, and contract...</center>
+          <center>블록체인ID와 Contract를 불러오는 중 입니다.</center>
         </>
       );
     }
@@ -182,7 +185,7 @@ export default class Voting extends Component {
                   this.state.currentVoter.hasVoted ? (
                     <div className="container-item success">
                       <div>
-                        <strong>You've casted your vote.</strong>
+                        <strong>투표되었습니다.</strong>
                         <p />
                         <center>
                           <Link
@@ -192,43 +195,43 @@ export default class Voting extends Component {
                               textDecoration: "underline",
                             }}
                           >
-                            See Results
+                            결과 확인
                           </Link>
                         </center>
                       </div>
                     </div>
                   ) : (
-                    <div className="container-item info">
-                      <center>Go ahead and cast your vote.</center>
+                    <div className="container-item">
+                      <center>투표를 진행하십시오.</center>
                     </div>
                   )
                 ) : (
                   <div className="container-item attention">
-                    <center>Please wait for admin to verify.</center>
+                    <center><h3>관리자가 승인할 때까지 기다려주십시오.</h3></center>
                   </div>
                 )
               ) : (
                 <>
                   <div className="container-item attention">
                     <center>
-                      <p>You're not registered. Please register first.</p>
+                      <p>아직 승인되지 않은 유저입니다. 가입해주세요.</p>
                       <br />
                       <Link
                         to="/Registration"
                         style={{ color: "black", textDecoration: "underline" }}
                       >
-                        Registration Page
+                        가입하기
                       </Link>
                     </center>
                   </div>
                 </>
               )}
               <div className="container-main">
-                <h2>Candidates</h2>
-                <small>Total candidates: {this.state.candidates.length}</small>
+                <h2>후보자</h2>
+                <small>총 후보자 수: {this.state.candidates.length}</small>
                 {this.state.candidates.length < 1 ? (
                   <div className="container-item attention">
-                    <center>Not one to vote for.</center>
+                    <center>투표할 사람이 없습니다.</center>
                   </div>
                 ) : (
                   <>
@@ -237,7 +240,7 @@ export default class Voting extends Component {
                       className="container-item"
                       style={{ border: "1px solid black" }}
                     >
-                      <center>That is all.</center>
+                      <center>여기가 마지막입니다.</center>
                     </div>
                   </>
                 )}
@@ -247,13 +250,13 @@ export default class Voting extends Component {
             <>
               <div className="container-item attention">
                 <center>
-                  <h3>The Election ended.</h3>
+                  <h3>투표가 종료되었습니다.</h3>
                   <br />
                   <Link
                     to="/Results"
                     style={{ color: "black", textDecoration: "underline" }}
                   >
-                    See results
+                    결과 확인
                   </Link>
                 </center>
               </div>

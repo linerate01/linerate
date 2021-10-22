@@ -44,15 +44,15 @@ class NotFound extends Component {
         <h1>404 NOT FOUND!</h1>
         <center>
           <p>
-            The page your are looking for doesn't exist.
+            페이지를 찾을 수 없습니다.
             <br />
-            Go to{" "}
             <Link
               to="/"
               style={{ color: "black", textDecoration: "underline" }}
             >
-              Home
+              홈
             </Link>
+            {"으로 이동"}
           </p>
         </center>
       </>
